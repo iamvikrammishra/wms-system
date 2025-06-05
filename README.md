@@ -127,6 +127,80 @@ The Dashboard provides an overview of your inventory:
 3. Ask natural language questions about your inventory
 4. View the AI-generated responses and visualizations
 
+## Architecture and Logic
+
+### System Architecture
+
+The WMS is built using a modern frontend architecture with a Supabase backend (in progress) and an Express.js server for AI functionality:
+
+```
+┌─────────────────┐     ┌───────────────┐     ┌─────────────────┐
+│                 │     │               │     │                 │
+│  React Frontend ├─────►   Supabase    │     │  Express Server │
+│                 │     │  (Database)   │     │   (AI Query)    │
+│                 │     │               │     │                 │
+└────────┬────────┘     └───────────────┘     └────────┬────────┘
+         │                                             │
+         │                                             │
+         ▼                                             ▼
+┌─────────────────┐                           ┌─────────────────┐
+│                 │                           │                 │
+│   localStorage   │                           │    OpenAI API   │
+│  (Fallback)     │                           │                 │
+│                 │                           │                 │
+└─────────────────┘                           └─────────────────┘
+```
+
+### Core Logic Components
+
+1. **Data Management Logic**
+   - CSV parsing using PapaParse
+   - Data validation and transformation
+   - Persistence to Supabase/localStorage
+   - Data retrieval and caching strategies
+
+2. **Business Logic**
+   - Inventory tracking and quantity management
+   - SKU to MSKU mapping relationships
+   - Warehouse location management
+   - Sales and returns processing
+
+3. **Visualization Logic**
+   - Data aggregation for charts
+   - Time-series trend generation
+   - Metric calculations (totals, averages, etc.)
+   - Dynamic chart rendering with Recharts
+
+4. **AI Query Logic**
+   - Natural language processing with OpenAI
+   - Context preparation and prompt engineering
+   - Response parsing and formatting
+   - Result visualization (tables, charts)
+
+### Data Flow
+
+1. **Data Upload Flow**
+   ```
+   CSV File → Parse with PapaParse → Validate → Transform → Save to Supabase/localStorage
+   ```
+
+2. **Dashboard Data Flow**
+   ```
+   Fetch from Supabase/localStorage → Process Data → Calculate Metrics → Render Charts
+   ```
+
+3. **AI Query Flow**
+   ```
+   User Question + CSV Data → Express Server → OpenAI API → Parse Response → Render Results
+   ```
+
+### State Management
+
+The application uses React's built-in state management with hooks:
+- `useState` for component-level state
+- `useEffect` for side effects and data fetching
+- `useContext` for sharing state across components (where needed)
+
 ## Project Structure
 
 ```
