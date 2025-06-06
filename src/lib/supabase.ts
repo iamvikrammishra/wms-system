@@ -2,11 +2,30 @@ import { createClient } from '@supabase/supabase-js';
 
 // Replace these with your actual Supabase credentials
 // In production, these should be environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-supabase-project.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key';
 
+// Create a mock client if credentials are not available
+const createMockClient = () => {
+  console.warn('Using mock Supabase client. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.');
+  return {
+    from: () => ({
+      select: () => ({ data: [], error: null }),
+      insert: () => ({ data: null, error: null }),
+      update: () => ({ data: null, error: null }),
+      delete: () => ({ data: null, error: null }),
+    }),
+    auth: {
+      signIn: () => Promise.resolve({ user: null, session: null, error: null }),
+      signOut: () => Promise.resolve({ error: null }),
+    },
+  };
+};
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Use real client if credentials are available, otherwise use mock
+export const supabase = supabaseUrl && supabaseUrl !== 'https://your-supabase-project.supabase.co' 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : createMockClient() as any;
 
 // Types for database tables
 export type Tables = {

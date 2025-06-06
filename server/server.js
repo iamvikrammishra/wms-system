@@ -19,8 +19,17 @@ const openai = new OpenAI({
 });
 
 const app = express();
-app.use(cors()); // allow requests from any origin (or restrict to 'http://localhost:5173')
+// Configure CORS to allow requests from both localhost and deployed frontend
+app.use(cors({
+  origin: ["http://localhost:5173", "https://warehouse-management-system.windsurf.build"],
+  credentials: true
+}));
 app.use(express.json({ limit: "5mb" })); // parse JSON bodies up to 5MB (CSV text might be large)
+
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", message: "WMS AI Backend is running" });
+});
 
 // POST /api/ai-query
 app.post("/api/ai-query", async (req, res) => {

@@ -170,7 +170,8 @@ export default function AiQuery() {
         enhancedQuestion = `${question} If possible, provide your answer with visualization data in JSON format. For charts, use format: {"type":"chart","data":[{key:value}]}. For tables, use format: {"type":"table","headers":[...],"rows":[[...]]}`;
       }
 
-      const resp = await fetch("http://localhost:4000/api/ai-query", {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:4000";
+      const resp = await fetch(`${apiUrl}/api/ai-query`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
