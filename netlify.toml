@@ -4,7 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
-  VITE_API_URL = "https://wms-ai-backend.onrender.com"
+  VITE_API_URL = "https://wms-system.onrender.com"
   VITE_SUPABASE_URL = "https://your-supabase-project.supabase.co"
   VITE_SUPABASE_ANON_KEY = "your-anon-key"
 
