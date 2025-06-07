@@ -6,10 +6,10 @@ A modern, full-stack warehouse management system built with React, TypeScript, a
 
 This project is submitted with the following components:
 
-- **GitHub Repository**: [Link to GitHub Repository]
-- **LOOM Video Presentation**: [Link to LOOM Video]
-- **Deployed Frontend**: https://warehouse-management-system.windsurf.build
-- **Deployed Backend**: [Link to Render deployment]
+- **GitHub Repository**: [https://github.com/iamvikrammishra/wms-system/tree/main]
+- **LOOM Video Presentation**: [https://www.loom.com/share/d7217efbc48d49d6be2f4f5355599f2d?sid=f070703a-a33d-42fb-b571-32b9679504d6]
+- **Deployed Frontend**: [https://elaborate-cobbler-6b1c6b.netlify.app/]
+- **Deployed Backend**: [https://wms-system.onrender.com]
 
 > **Note:** The application uses localStorage for data persistence with backend integration for AI functionality.
 
@@ -258,7 +258,4 @@ wms-system/
 3. Make your changes
 4. Submit a pull request
 
-## License
-
-This project is licensed under the MIT License.
 

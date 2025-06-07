@@ -21,7 +21,7 @@ const openai = new OpenAI({
 const app = express();
 // Configure CORS to allow requests from both localhost and deployed frontend
 app.use(cors({
-  origin: ["http://localhost:5173", "https://warehouse-management-system.windsurf.build", "https://elaborate-cobbler-6b1c6b.netlify.app"],
+  origin: ["http://localhost:5173", "https://elaborate-cobbler-6b1c6b.netlify.app"],
   credentials: true
 }));
 app.use(express.json({ limit: "5mb" })); // parse JSON bodies up to 5MB (CSV text might be large)
