@@ -1,8 +1,17 @@
 # Warehouse Management System (WMS)
 
-A modern, full-stack warehouse management system built with React, TypeScript, and Supabase. This application helps businesses manage inventory, track products, and gain insights through AI-powered analytics.
+A modern, full-stack warehouse management system built with React, TypeScript, and Node.js. This application helps businesses manage inventory, track products, and gain insights through AI-powered analytics.
 
-> **Note:** Currently, the Supabase integration is in progress. The application falls back to localStorage for data persistence until the Supabase connection is fully configured and operational.
+## Submission Package
+
+This project is submitted with the following components:
+
+- **GitHub Repository**: [Link to GitHub Repository]
+- **LOOM Video Presentation**: [Link to LOOM Video]
+- **Deployed Frontend**: https://warehouse-management-system.windsurf.build
+- **Deployed Backend**: [Link to Render deployment]
+
+> **Note:** The application uses localStorage for data persistence with backend integration for AI functionality.
 
 ## Features
 
@@ -20,11 +29,12 @@ A modern, full-stack warehouse management system built with React, TypeScript, a
 - Tailwind CSS for styling
 - Recharts for data visualization
 - React Router for navigation
+- Netlify for deployment
 
 ### Backend
-- Supabase (PostgreSQL) for database
-- Express.js for AI Query backend
+- Node.js with Express.js for AI Query backend
 - OpenAI API for natural language processing
+- Render for backend deployment
 
 ## Getting Started
 
@@ -43,16 +53,15 @@ git clone <repository-url>
 cd wms-system
 ```
 
-2. Install dependencies
+2. Install frontend dependencies
 ```bash
 npm install
 ```
 
-3. Set up environment variables for Supabase (optional - currently using localStorage)
+3. Set up environment variables for the frontend
 Create a `.env` file in the root directory with the following variables:
 ```
-VITE_SUPABASE_URL=your-supabase-url
-VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_API_URL=http://localhost:10000 # URL for the backend server
 ```
 
 4. Set up the Express server for AI Query
@@ -68,11 +77,24 @@ OPENAI_API_KEY=your-openai-api-key
 
 > **Note:** The AI Query feature requires a valid OpenAI API key to function properly.
 
-### Database Setup
+### Backend Setup
 
-1. Create a new project in Supabase
-2. Run the database schema script in `supabase_schema.sql`
-3. Set up Row Level Security (RLS) policies as needed
+1. Navigate to the server directory
+```bash
+cd server
+```
+
+2. Install backend dependencies
+```bash
+npm install
+```
+
+3. Set up environment variables for the backend
+Create a `.env` file in the server directory:
+```
+OPENAI_API_KEY=your-openai-api-key
+PORT=10000
+```
 
 ### Running the Application
 
@@ -90,23 +112,17 @@ node server.js
 ## Usage Guide
 
 ### Current Data Storage
-The application currently uses two data storage mechanisms:
+The application currently uses localStorage as the primary storage mechanism for:
 
-1. **localStorage**: Used as the primary fallback storage for:
-   - Inventory data uploaded via CSV
-   - SKU mappings
-   - AI query history
-
-2. **Supabase**: Integration in progress for:
-   - Products table
-   - Inventory table
-   - Warehouses table
+1. **Inventory Data**: Data uploaded via CSV files
+2. **SKU Mappings**: Relationships between SKUs and MSKUs
+3. **AI Query History**: Previous natural language queries and their results
 
 ### Data Upload
 1. Navigate to the Data Upload page
 2. Upload a CSV file with inventory data
 3. Review the data preview
-4. Click "Save to Database" to persist the data (currently saves to localStorage with Supabase integration in progress)
+4. Click "Save to Database" to persist the data to localStorage
 
 ### Dashboard
 The Dashboard provides an overview of your inventory:
@@ -131,22 +147,22 @@ The Dashboard provides an overview of your inventory:
 
 ### System Architecture
 
-The WMS is built using a modern frontend architecture with a Supabase backend (in progress) and an Express.js server for AI functionality:
+The WMS is built using a modern frontend architecture with localStorage for data persistence and an Express.js server for AI functionality:
 
 ```
-┌─────────────────┐     ┌───────────────┐     ┌─────────────────┐
-│                 │     │               │     │                 │
-│  React Frontend ├─────►   Supabase    │     │  Express Server │
-│                 │     │  (Database)   │     │   (AI Query)    │
-│                 │     │               │     │                 │
-└────────┬────────┘     └───────────────┘     └────────┬────────┘
+┌─────────────────┐                           ┌─────────────────┐
+│                 │                           │                 │
+│  React Frontend ├───────────────────────────►  Express Server │
+│                 │                           │   (AI Query)    │
+│                 │                           │                 │
+└────────┬────────┘                           └────────┬────────┘
          │                                             │
          │                                             │
          ▼                                             ▼
 ┌─────────────────┐                           ┌─────────────────┐
 │                 │                           │                 │
 │   localStorage   │                           │    OpenAI API   │
-│  (Fallback)     │                           │                 │
+│  (Data Storage) │                           │                 │
 │                 │                           │                 │
 └─────────────────┘                           └─────────────────┘
 ```
@@ -220,10 +236,10 @@ wms-system/
 
 ## Troubleshooting
 
-### Supabase Connection Issues
-- If the Dashboard is not showing any data, check that your Supabase credentials are correctly set in the `.env` file
-- Currently, the application falls back to localStorage if Supabase connection fails
-- Check browser console for any connection errors
+### Data Persistence Issues
+- If the Dashboard is not showing any data, check that localStorage is enabled in your browser
+- Clear browser cache if you encounter data inconsistencies
+- Check browser console for any JavaScript errors
 
 ### AI Query Not Working
 - Ensure the Express server is running (`node server/server.js`)
@@ -245,3 +261,4 @@ wms-system/
 ## License
 
 This project is licensed under the MIT License.
+
