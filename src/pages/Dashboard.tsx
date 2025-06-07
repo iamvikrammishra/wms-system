@@ -107,7 +107,6 @@ export default function Dashboard() {
   // Data states
   const [inventoryData, setInventoryData] = useState<InventoryWithDetails[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [queryHistory, setQueryHistory] = useState<any[]>([]);
   
   // Update time every minute
@@ -139,11 +138,14 @@ export default function Dashboard() {
           setQueryHistory([]);
         }
       } else {
-        setError('No inventory data available');
+        // Set empty inventory data instead of error
+      setInventoryData([]);
       }
     } catch (err) {
       console.error('Error loading inventory data:', err);
-      setError('Failed to load inventory data');
+      console.error('Failed to load inventory data');
+      // Don't set error message, just use empty inventory data
+      setInventoryData([]);
     } finally {
       setLoading(false);
     }
@@ -316,13 +318,15 @@ const dashboardMetrics = {
           </svg>
           <h3 className="mt-4 text-lg font-medium text-gray-900">Loading inventory data...</h3>
         </div>
-      ) : error ? (
-        <div className="bg-white rounded-xl p-8 mb-8 text-center border border-red-100 shadow-sm">
-          <svg className="w-16 h-16 mx-auto text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      ) : inventoryData.length === 0 ? (
+        <div className="bg-white rounded-xl p-8 mb-8 text-center border border-gray-100 shadow-sm">
+          <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
           </svg>
-          <h3 className="mt-4 text-lg font-medium text-gray-900">Error Loading Data</h3>
-          <p className="mt-2 text-gray-600">{error}</p>
+          <h3 className="mt-4 text-lg font-medium text-gray-900">No Data Available</h3>
+          <p className="mt-2 text-gray-600">
+            Please upload your inventory data to get started.
+          </p>
           <div className="mt-4">
             <Link to="/data-upload" className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
               Go to Data Upload
